@@ -2,7 +2,6 @@
 
 ColdHide is a mini and simple open source user mode anti-anti debug library x86/x64 for Windows.
 To inject this library try using [ColdMDLoader](https://github.com/Rat431/ColdMDLoader).
-Feel free to join in the [Discord](https://discord.gg/QPQzR57) channel if you need any help or you have any question.
 
 ## Hooks
  - ***PEB hooking***
