@@ -16,9 +16,9 @@ static CONTEXT BeckupHardwareBP[1000] = { 0 };
 static bool KIUEDFlag[1000] = { 0 };
 
 // Some common debugger process names.
-static const wchar_t* Debuggers[13] = { L"ollydbg.exe", L"windbg.exe", L"devenv.exe", L"ImmunityDebugger.exe", L"idaq.exe", L"idaq64.exe", L"ida.exe",
+const wchar_t* Debuggers[13] = { L"ollydbg.exe", L"windbg.exe", L"devenv.exe", L"ImmunityDebugger.exe", L"idaq.exe", L"idaq64.exe", L"ida.exe",
 L"ida64.exe", L"x32dbg.exe", L"x64dbg.exe", L"ProcessHacker.exe", L"cheatengine-x86_64.exe", L"cheatengine-i386.exe" };
-static const wchar_t* DebuggersPatch[13] = { L"proc1.exe", L"proc2.exe", L"proc3.exe", L"proc4.exe", L"proc5.exe", L"proc6.exe",
+const wchar_t* DebuggersPatch[13] = { L"proc1.exe", L"proc2.exe", L"proc3.exe", L"proc4.exe", L"proc5.exe", L"proc6.exe",
 L"proc7.exe", L"proc8.exe", L"proc9.exe", L"proc10.exe", L"proc11.exe", L"proc12.exe", L"proc13.exe" };
 
 namespace Hook_emu
@@ -397,7 +397,7 @@ namespace Hook_emu
 			for (int i = 0; i < 13; i++) {
 				if (lstrcmpW(lppe->szExeFile, Debuggers[i]) == 0) {
 					UINT Length = lstrlenW(lppe->szExeFile);
-					ZeroMemory(lppe->szExeFile, Length);
+					ZeroMemory(lppe->szExeFile, (Length * sizeof(wchar_t)));
 					lstrcpyW(lppe->szExeFile, DebuggersPatch[i]);
 					break;
 				}
@@ -419,10 +419,10 @@ namespace Hook_emu
 		if (Return)
 		{
 			// Target process can check the process name
-			for (int i = 0; i < sizeof(Debuggers); i++) {
+			for (int i = 0; i < 13; i++) {
 				if (lstrcmpW(lppe->szExeFile, Debuggers[i]) == 0) {
 					UINT Length = lstrlenW(lppe->szExeFile);
-					ZeroMemory(lppe->szExeFile, Length);
+					ZeroMemory(lppe->szExeFile, (Length * sizeof(wchar_t)));
 					lstrcpyW(lppe->szExeFile, DebuggersPatch[i]);
 					break;
 				}
